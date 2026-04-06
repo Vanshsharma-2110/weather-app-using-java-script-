@@ -1,11 +1,11 @@
 
-const API_KEY  = '28e8bbca19ff487d8ac64408260604';                             
-const BASE_URL = 'https://api.weatherapi.com/v1'; 
+const API_KEY = '28e8bbca19ff487d8ac64408260604';
+const BASE_URL = 'https://api.weatherapi.com/v1';
 
 const navItems = [
-  { icon: '🌦️', label: 'Weather',  active: true  },
-  { icon: '☰',  label: 'Cities',   active: false },
-  { icon: '🗺️', label: 'Map',      active: false },
+  { icon: '🌦️', label: 'Weather', active: true },
+  { icon: '☰', label: 'Cities', active: false },
+  { icon: '🗺️', label: 'Map', active: false },
   { icon: '⚙️', label: 'Settings', active: false },
 ];
 
@@ -28,15 +28,15 @@ function getWeatherEmoji(code) {
   if ([1087, 1273, 1276, 1279, 1282].includes(code)) return '⛈️';
   // Snow / Sleet / Blizzard
   if ([1066, 1069, 1072, 1114, 1117, 1168, 1171,
-       1198, 1201, 1204, 1207, 1210, 1213, 1216,
-       1219, 1222, 1225, 1237, 1249, 1252, 1255,
-       1258, 1261, 1264].includes(code)) return '❄️';
+    1198, 1201, 1204, 1207, 1210, 1213, 1216,
+    1219, 1222, 1225, 1237, 1249, 1252, 1255,
+    1258, 1261, 1264].includes(code)) return '❄️';
   return '🌡️';
 }
 
 function getDayLabel(index, dateStr) {
   if (index === 0) return 'Today';
-  
+
   const date = new Date(dateStr + 'T12:00:00');
   return date.toLocaleDateString('en-US', { weekday: 'short' });
 }
@@ -44,7 +44,7 @@ function getDayLabel(index, dateStr) {
 
 async function fetchWeather(city) {
   const url = `${BASE_URL}/forecast.json?key=${API_KEY}&q=${encodeURIComponent(city)}&days=7&aqi=yes`;
-  const res  = await fetch(url);
+  const res = await fetch(url);
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     throw new Error(err?.error?.message ?? `City not found: ${city}`);
@@ -52,20 +52,19 @@ async function fetchWeather(city) {
   return res.json();
 }
 
-// ── DATA TRANSFORMERS (WeatherAPI response shape) ─────────────────────────────
 
 function buildHourly(data) {
-  // today's hourly array — pick 6 evenly spread hours
-  const hours  = data.forecast.forecastday[0].hour;
-  const now    = new Date().getHours();
-  // Start from current hour, or 6am if before that
-  const start  = Math.max(now, 6);
+
+  const hours = data.forecast.forecastday[0].hour;
+  const now = new Date().getHours();
+
+  const start = Math.max(now, 6);
   const picked = [];
 
   for (let h = start; picked.length < 6 && h < 24; h += Math.ceil((24 - start) / 6)) {
     picked.push(hours[Math.min(h, 23)]);
   }
-  // Pad if not enough hours left today
+
   while (picked.length < 6) picked.push(hours[23]);
 
   return picked.map(h => {
@@ -81,26 +80,25 @@ function buildHourly(data) {
 
 function buildWeekly(data) {
   return data.forecast.forecastday.map((day, i) => ({
-    day:       getDayLabel(i, day.date),
-    icon:      getWeatherEmoji(day.day.condition.code),
+    day: getDayLabel(i, day.date),
+    icon: getWeatherEmoji(day.day.condition.code),
     condition: day.day.condition.text.split(' ')[0], // first word keeps it short
-    hi:        Math.round(day.day.maxtemp_c),
-    lo:        Math.round(day.day.mintemp_c),
+    hi: Math.round(day.day.maxtemp_c),
+    lo: Math.round(day.day.mintemp_c),
   }));
 }
 
 function buildAirConditions(data) {
-  const c   = data.current;
+  const c = data.current;
   const day = data.forecast.forecastday[0].day;
   return [
-    { icon: '🌡️', label: 'Real Feel',     value: `${Math.round(c.feelslike_c)}°`        },
-    { icon: '💨', label: 'Wind',           value: `${c.wind_kph.toFixed(1)} km/h`         },
-    { icon: '💧', label: 'Chance of rain', value: `${day.daily_chance_of_rain}%`           },
-    { icon: '🌞', label: 'UV Index',       value: `${Math.round(c.uv)}`                   },
+    { icon: '🌡️', label: 'Real Feel', value: `${Math.round(c.feelslike_c)}°` },
+    { icon: '💨', label: 'Wind', value: `${c.wind_kph.toFixed(1)} km/h` },
+    { icon: '💧', label: 'Chance of rain', value: `${day.daily_chance_of_rain}%` },
+    { icon: '🌞', label: 'UV Index', value: `${Math.round(c.uv)}` },
   ];
 }
 
-// ── RENDER FUNCTIONS ──────────────────────────────────────────────────────────
 
 function renderNav() {
   const nav = document.getElementById('sidebar-nav');
@@ -120,8 +118,8 @@ function renderNav() {
 
 function renderHero(data) {
   const hero = document.getElementById('hero');
-  const c    = data.current;
-  const day  = data.forecast.forecastday[0].day;
+  const c = data.current;
+  const day = data.forecast.forecastday[0].day;
 
   hero.innerHTML = `
     <div>
@@ -152,7 +150,7 @@ function renderForecastCard(hourly) {
 }
 
 function renderAirCard(airConditions) {
-  const card  = document.getElementById('air-card');
+  const card = document.getElementById('air-card');
   const items = airConditions.map(({ icon, label, value }) => `
     <div class="ar">
       <div class="al"><span>${icon}</span> ${label}</div>
@@ -193,7 +191,6 @@ function renderLoading() {
   `;
 }
 
-// ── MAIN LOAD ─────────────────────────────────────────────────────────────────
 
 async function loadWeather(city) {
   if (!API_KEY) {
@@ -217,7 +214,6 @@ async function loadWeather(city) {
   }
 }
 
-// ── SEARCH ────────────────────────────────────────────────────────────────────
 
 function initSearch() {
   const input = document.getElementById('city-search');
@@ -229,12 +225,11 @@ function initSearch() {
   });
 }
 
-// ── INIT ──────────────────────────────────────────────────────────────────────
 
 function init() {
   renderNav();
   initSearch();
-  loadWeather('Amritsar');   // ← default city on page load
+  loadWeather('Amritsar'); 
 }
 
 document.addEventListener('DOMContentLoaded', init);
