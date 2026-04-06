@@ -3,6 +3,8 @@
 A sleek, responsive weather dashboard built with vanilla HTML, CSS, and JavaScript — powered by the WeatherAPI.com API.
 <img width="1471" height="799" alt="Screenshot 2026-04-06 122815" src="https://github.com/user-attachments/assets/bd5f2b2a-564f-414a-ba50-ab9f64c16cee" />
 
+https://vanshsharma-2110.github.io/weather-app-using-java-script-/
+
 ## ✨ Features
 
 - 🔍 Search any city worldwide
