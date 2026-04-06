@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="sidebar">
+      <div class="logo">💨</div>
+      <nav class="nav" id="sidebar-nav"></nav>
+    </div>
+
+    <div class="main">
+      <div class="search">
+        <span class="search-ico">🔍</span>
+        <input type="text" id="city-search" placeholder="Search for cities" />
+      </div>
+      <div class="hero" id="hero"></div>
+      <div class="card" id="forecast-card"></div>
+      <div class="card" id="air-card"></div>
+    </div>
+
+
+    <aside class="panel">
+      <div class="pt">7-Day Forecast</div>
+      <div id="weekly"></div>
+    </aside>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

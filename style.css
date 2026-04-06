@@ -1,0 +1,403 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0d1521;
+  --sidebar: #111b2b;
+  --card: #162032;
+  --panel: #131d2d;
+  --inner: #192638;
+  --accent: #3a9df8;
+  --text: #e8f1ff;
+  --muted: #6b8aaa;
+  --divider: rgba(255, 255, 255, 0.07);
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: #0a1220;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.container {
+  display: flex;
+  width: 1160px;
+  height: 620px;
+  background: var(--card);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  animation: up 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.sidebar {
+  width: 90px;
+  background: var(--sidebar);
+  border-right: 1px solid var(--divider);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 22px 0 18px;
+  flex-shrink: 0;
+}
+
+.logo {
+  width: 46px;
+  height: 46px;
+  background: linear-gradient(145deg, #1a5bbf, #3a9df8);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 26px;
+  box-shadow: 0 6px 22px rgba(58, 157, 248, 0.38);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nb {
+  width: 62px;
+  min-height: 58px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: background 0.18s, color 0.18s;
+}
+
+.nb:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #9ab4ce;
+}
+
+.nb.on {
+  background: var(--card);
+  color: var(--text);
+}
+
+.nb .ic {
+  font-size: 20px;
+}
+
+/* ── MAIN ── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 22px;
+  gap: 13px;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Search */
+.search {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.search input {
+  width: 100%;
+  background: var(--inner);
+  border: 1px solid var(--divider);
+  border-radius: 10px;
+  padding: 11px 16px 11px 42px;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.search input::placeholder {
+  color: var(--muted);
+}
+
+.search input:focus {
+  border-color: rgba(58, 157, 248, 0.4);
+  color: var(--text);
+}
+
+.search-ico {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+/* Hero */
+.hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 2px 2px 0;
+  flex-shrink: 0;
+}
+
+.city {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  line-height: 1;
+  color: var(--text);
+}
+
+.sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+.temp {
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: -2px;
+  color: var(--text);
+  margin-top: 8px;
+  line-height: 1;
+}
+
+.sun-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 130px;
+  height: 130px;
+  flex-shrink: 0;
+}
+
+.sun {
+  font-size: 108px;
+  line-height: 1;
+  filter: drop-shadow(0 0 28px rgba(255, 200, 30, 0.42)) drop-shadow(0 0 10px rgba(255, 150, 0, 0.28));
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translateY(-9px) rotate(2deg);
+  }
+}
+
+/* Cards */
+.card {
+  background: var(--inner);
+  border: 1px solid var(--divider);
+  border-radius: 16px;
+  padding: 15px 20px;
+  flex-shrink: 0;
+}
+
+.ch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 13px;
+}
+
+.ct {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Hourly forecast */
+.hourly {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.hcol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  padding: 0 6px;
+  border-right: 1px solid var(--divider);
+}
+
+.hcol:last-child {
+  border-right: none;
+}
+
+.ht {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.hi {
+  font-size: 28px;
+}
+
+.hv {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+/* Air conditions */
+.ag {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 28px;
+}
+
+.ar {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.al {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.al span {
+  font-size: 15px;
+}
+
+.av {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.btn-more {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.18s, transform 0.15s;
+}
+
+.btn-more:hover {
+  opacity: 0.86;
+  transform: scale(1.03);
+}
+
+/* ── 7-DAY PANEL ── */
+.panel {
+  width: 268px;
+  flex-shrink: 0;
+  background: var(--panel);
+  border-left: 1px solid var(--divider);
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.panel::-webkit-scrollbar {
+  display: none;
+}
+
+.pt {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.dr {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--divider);
+}
+
+.dr:last-child {
+  border-bottom: none;
+}
+
+.dn {
+  width: 38px;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.di {
+  font-size: 23px;
+  flex-shrink: 0;
+}
+
+.dc {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.dts {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.lo {
+  color: var(--muted);
+  font-weight: 500;
+}
